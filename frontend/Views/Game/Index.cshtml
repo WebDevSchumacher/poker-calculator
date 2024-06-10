@@ -1,0 +1,65 @@
+﻿@model dynamic
+
+
+@{
+    ViewData["Title"] = "Poker Probability";
+}
+@section styles {
+    <link href='~/css/index.css' rel="stylesheet" type="text/css" />
+}
+
+@section scripts{
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/js/index.js" ></script>
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+}
+@{
+    int gameIndex = Model.InitialIndex;
+    Model.currentIndex = gameIndex;
+    int handCardCount = Model.GameTypeList[gameIndex].handcards;
+    int boardCardCount = Model.GameTypeList[gameIndex].boardcards;
+    string gameTypeName = Model.GameTypeList[gameIndex].name;
+   
+}
+
+
+<section class="container row p-0 m-0" id="calculator-Page">
+    <div class="col-12">
+        <h2 class="text-info">Poker Probability Calculator</h2>
+    </div>
+    <div class="col-12">
+        <div class="text-info">
+            Important: There should be atleast <b>3 cards on board</b> and <b>2 card in your hand</b>
+            to calculate your probability
+        </div>
+    </div>
+
+    <div id="gameTypeTabs">
+    @{int index = 0;}
+    @foreach (GameType gametype in Model.GameTypeList)
+    {
+
+           
+            @Html.ActionLink(
+                linkText: gametype.name, 
+                actionName: "OnGetPartial", 
+                controllerName:"Game", 
+                routeValues: new { gameTypeIndex = index }, 
+                htmlAttributes: new
+                 {
+                 data_ajax = "true",
+                 data_ajax_method = "GET",
+                 data_ajax_mode = "replace",
+                 data_ajax_update = "#currentGameType",
+                 @class = "gameTypeTab btn"
+                })      
+            
+        index++;
+    }
+    </div>
+
+    <div id="currentGameType">
+        @* @{Html.RenderPartial("_Index", (Object) Model);} *@
+        <partial name="_Index" model=Model />
+    </div>
+</section>

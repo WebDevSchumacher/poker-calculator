@@ -1,0 +1,84 @@
+﻿@model dynamic
+@{
+}
+
+@section styles {
+    <link href='@Url.Content("~/css/result.css")' rel="stylesheet" type="text/css" />
+}
+
+<div class="col-12">
+    <h2 class="text-info">Probability Result</h2>
+</div>
+
+@*<div class="text-center"><h2>Resultat Temperatur ist: <label>@Model.Res</label></h2></div>*@
+
+
+
+<table class="table border text-center align-content-center">
+    <tr>
+        <td>Cards on Board</td>
+        <td>
+            <div class="cards-group">
+                @foreach (frontend.Models.CardCardTypeString boardcard in Model.PlayroundDeserialized.boardcards)
+                {
+                    <div class="border board-card card-containier" empty="true" selected="false" id="boardCard3">
+                        <div class="used-card" style="background:white;">
+                            <i class="bi bi-suit-@boardcard.CardType.ToLower()-fill"></i>
+                            <div>@boardcard.CardValue</div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>Cards on Hand</td>
+        <td>
+            <div class="cards-group">
+                @foreach (frontend.Models.CardCardTypeString handcard in Model.PlayroundDeserialized.handcards)
+                {
+                    <div class="border board-card card-containier" empty="true" selected="false" id="boardCard3">
+                        <div class="used-card" style="background:white;">
+                            <i class="bi bi-suit-@handcard.CardType.ToLower()-fill"></i>
+                            <div>@handcard.CardValue</div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>Number of opponents</td>
+        <td>
+            <div class="cards-group">
+                @Model.PlayroundDeserialized.opponent
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>Winning Probability</td>
+        <td>
+            <div class="cards-group">
+                @Model.Result
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>Losing Probability</td>
+        <td>
+            <div class="cards-group">
+                Placeholder
+            </div>
+        </td>
+    </tr>
+</table>
+
+
+<div>
+    <div class="flex-lg-wrap"> 
+        <span class="d-inline-block" style="text-align:right;">
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-info text-white">Back To Calculator</a>
+        </span>
+    </div>
+</div>
+

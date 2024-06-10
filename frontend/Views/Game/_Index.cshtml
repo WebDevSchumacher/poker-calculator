@@ -1,0 +1,158 @@
+@model dynamic
+
+@section styles {
+<link href='@Url.Content("~/css/index.css")' rel="stylesheet" type="text/css" />
+}
+
+
+@{
+int gameTypeIndex = Model.currentIndex;
+int handCardCount = Model.GameTypeList[gameTypeIndex].handcards;
+int boardCardCount = Model.GameTypeList[gameTypeIndex].boardcards;
+string gameTypeName = Model.GameTypeList[gameTypeIndex].name;
+}
+
+<article id="calculator-Container">
+<div class="border row mt-2 align-self-center align-middle">
+            @foreach (List<Card> cardlist in Model.Cards)
+                {
+                <div class="col-3 border rounded border-dark pb-1">
+                    <div class="font-weight-bold">@cardlist.First().CardType</div>
+                    @{
+                    var fillColor = "";
+                    if (cardlist.First().CardType.ToString() == "Heart" | cardlist.First().CardType.ToString() ==
+                    "Diamond")
+                    {
+                    fillColor = "color:red;";
+                    }
+                    else
+                    {
+                    fillColor = "color:black;";
+                    }
+                    }
+
+                    @foreach (Card card in cardlist)
+                    {
+                    var cardtype = @card.CardType.ToString().ToLower();
+                    <span class="deck-card" selected-deckcard="false" cardType="@cardtype" cardValue="@card.CardValue"
+                        id="@cardtype@card.CardValue">
+                        <i class="bi bi-suit-@cardtype-fill" style="@fillColor"></i>
+                        @card.CardValue
+                    </span>
+
+                    }
+                </div>
+                }
+        </div>
+
+        <div id="board-wrapper">
+            <div class="border mt-2" id="board">
+                <div id="board-cards">
+                    @if (gameTypeName.Equals("Texas Holdem"))
+                    {
+
+
+                    <div class="flop card-group">
+                        <div class="flop-cards">
+                            <div class="border flop-card board-card card-containier" empty="true" selected="true"
+                                id="boardCard1">
+                                @*<div class="used-card">
+                                    <i class="bi bi-suit-heart-fill"></i>
+                                    <div>2</div>
+                                </div>*@
+                            </div>
+                            <div class="border flop-card board-card card-containier" empty="true" selected="false"
+                                id="boardCard2">
+
+                            </div>
+                            <div class="border flop-card board-card card-containier" empty="true" selected="false"
+                                id="boardCard3">
+
+                            </div>
+                        </div>
+                        <p>Flop</p>
+                    </div>
+                    <div class="turn card-group">
+                        <div class="turn-cards">
+                            <div class="border turn-card board-card card-containier" empty="true" selected="false">
+
+                            </div>
+                        </div>
+                        <p>Turn</p>
+                    </div>
+                    <div class="river card-group">
+                        <div class="river-cards ">
+                            <div class="border river-card board-card card-containier" empty="true" selected="false">
+                            </div>
+                        </div>
+                        <p>River</p>
+                    </div>
+                    }
+                    else
+                    {
+
+                    <div class="flop card-group">
+                        <div class="flop-cards">
+                            <div class="border flop-card board-card card-containier" empty="true" selected="true"
+                                id="boardCard1">
+                            </div>
+                            @for (var i = 0; i < boardCardCount-1; i++) { <div
+                                class="border flop-card board-card card-containier" empty="true" selected="false"
+                                id="boardCard1">
+                        </div>
+                        }
+
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div id="player-wrapper">
+        <div class="border mt-4" id="players">
+            <div class="player-1 player card-group">
+                <h5>Your Cards</h5>
+                <div class="player-cards border">
+                    @for (var i = 0; i < handCardCount; i++) { <div class="border player-card card-containier"
+                        handcard="true" empty="true" selected="false">
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <form method="POST" asp-controller="Game" asp-action="GetResult"
+        style="width:100%; display:flex; flex-direction:column;">
+        @Html.AntiForgeryToken()
+        <div id="opponent-wrapper">
+            <div class="border mt-2" id="opponents">
+                <div class="op-group">
+                    <label class="op-title">Number of Opponents:</label>
+                    <select name="numbsofOpponents" id="opponentSelector" class="border op-Numbs">
+                        @foreach (int opNumb in Model.Opponent)
+                        {
+                        <option value="@opNumb">@opNumb</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="form-wrapper">
+            <div class="mt-2" id="sendForm">
+                <input type="hidden" id="gameType" name="gameType" value="@gameTypeName">
+                <input type="hidden" id="gameTypeID" name="gameTypeID" value="@gameTypeIndex">
+                <input type="hidden" id="playround" name="playround" value="">
+                <input type="submit" id="calculateValueButton" class="btn btn-info text-white"
+                    value="Calculate Probability" disabled>
+            </div>
+        </div>
+    </form>
+</article>
+
+@* I need to rewrite this, so that I can use event delegation 
+https://javascript.info/event-delegation *@
+ <script src='~/js/_index.js'></script>

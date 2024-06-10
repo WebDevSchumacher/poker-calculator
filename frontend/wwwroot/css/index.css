@@ -1,0 +1,188 @@
+﻿#board-wrapper,
+#player-wrapper,
+#opponent-wrapper,
+#form-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#board {
+  display: flex;
+  background-color: #32671f;
+  width: 65%;
+  height: 260px;
+  border-radius: 175px;
+  border: 4px solid transparent;
+}
+
+#players,
+#opponents,
+#sendForm {
+  display: flex;
+  width: 65%;
+  border-radius: 5px;
+  border: 4px solid transparent;
+}
+
+#sendForm {
+  justify-content: right;
+}
+
+#sendForm > [type='submit'] {
+  margin-left: auto;
+}
+
+#player,
+#board,
+#opponents {
+  align-items: center;
+  justify-content: center;
+}
+
+#board-cards {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 45.92%;
+}
+
+.board-card:hover {
+  background-color: rgba(255, 255, 126, 0.64);
+}
+
+.card-containier {
+  cursor: pointer;
+}
+
+.player-card:hover {
+  background-color: rgba(255, 255, 126, 0.64);
+}
+
+.deck-card {
+  display: inline-block;
+  width: 42px;
+  cursor: pointer;
+  border: rgba(126, 126, 126, 1) 0.5px solid;
+  padding: 1px;
+  margin: 0.5px;
+}
+
+.deck-card:hover {
+  border: aqua 0.5px solid;
+}
+
+.op-group {
+  display: flex;
+  flex-direction: row;
+}
+
+.op-title {
+  margin: 0;
+  padding: 2px;
+  margin-right: 13px;
+  text-align: left;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.op-Numbs {
+  margin-right: 20px;
+}
+
+.op-Numbs:hover {
+  border: #2a6dc9 0.5px solid !important;
+}
+.op-Numbs:focus {
+  border-color: #2a6dc9 !important;
+}
+
+.card-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-group > p {
+  color: white;
+}
+
+.board-card,
+.player-card {
+  background: #001;
+  border-radius: 5px;
+  width: 40px;
+  min-height: 62px;
+  margin: 0 1.5%;
+}
+
+[selected='true'] {
+  background-color: rgba(255, 255, 126, 0.64);
+}
+
+.turn,
+.river {
+  margin-left: 10%;
+}
+
+.flop-cards,
+.river-cards,
+.turn-cards,
+.player-cards {
+  display: flex;
+  flex-direction: row;
+}
+
+.player-cards,
+.player {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+}
+
+.player-cards {
+  background-color: rgba(200, 200, 200, 1);
+  border: rgba(126, 126, 126, 1) 0.5px solid;
+}
+
+.used-card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60px;
+}
+
+.bi-suit-heart-fill,
+.bi-suit-diamond-fill {
+  color: red;
+}
+
+.bi-suit-spade-fill,
+.bi-suit-club-fill {
+  color: black;
+}
+
+#gameTypeTabs {
+  margin-top: 20px;
+}
+
+#currentGameType {
+  border-top: 1px solid #f1f1f1;
+}
+
+.gameTypeTab:hover {
+  border: 1px solid var(--blue);
+  color: var(--blue);
+}
+
+@media only screen and (max-width: 800px) {
+  #board {
+    height: 200px;
+  }
+}
